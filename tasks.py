@@ -1,39 +1,40 @@
 # -*- coding: UTF-8 -*-
 import csv
 import datetime
+import sys
 
 # Lê os dados de um arquivo csv e coloca em uma lista
 def readCsvFile(fileName):
-    data = []
+	data = []
 
-    with open(fileName, "r") as csvFile:
-        reader = csv.reader(csvFile, delimiter =',', quotechar = '\"')
+	with open("Files/"+fileName, "r") as csvFile:
+		reader = csv.reader(csvFile, delimiter =',', quotechar = '\"')
 
-        for row in reader:
-            num = [x for x in row]
-            data.append(num)
+		for row in reader:
+			num = [x for x in row]
+			data.append(num)
 
-    return data
+	return data
 
 # Escreve em um arquivo csv uma lista de dados
 def writeCsvFile(fileName, data):
-	with open(fileName, 'wb') as csvFile:
+	with open("Files/"+fileName, 'wb') as csvFile:
 		writer = csv.writer(csvFile, delimiter=',', quotechar='\"', quoting=csv.QUOTE_MINIMAL)
 		writer.writerows(data)
 
 # Adiciona ao arquivo de texto já existente, uma nova linha
 def writeTxtFile(fileName, data):
-	openFile = open(fileName, "r")
+	openFile = open("Files/"+fileName, "r")
 	newData = openFile.readlines()
 	newData.append(data)
 	
-	openFile = open(fileName, "w")
+	openFile = open("Files/"+fileName, "w")
 	openFile.writelines(newData)
 	openFile.close()
 
 # Imprime as informações existente no arquivo txt de log
 def showLog(fileName):
-	openFile = open(fileName, "r")
+	openFile = open("Files/"+fileName, "r")
 	data = openFile.readlines()
 	for element in data:
 		print element
@@ -55,18 +56,30 @@ def users():
 	return users
 
 # Adiciona tarefas no arquivo, oriundas do REMEDY
-def add(data, date):
+def add(data, date, fuso):
 	newLine = []
-	newLine.append(date.strftime("%d-%m-%Y %H:%M"))
+	temp = date.strftime("%d-%m-%Y")
+	if date.hour > 9:
+		hour = str(date.hour-int(fuso))
+	else:
+		hour = "0" + str(date.hour-int(fuso))
+	if date.minute > 9:
+		minute = str(date.minute)
+	else:
+		minute = "0" + str(date.minute)
+	temp+= " " + hour + ":" + minute
+	newLine.append(temp)
 	
 	entry = raw_input("Nome da Tarefa:")
-	newLine.append(entry)
+	while verifyTasks(entry, data) == True:
+		entry = raw_input("Ja existe tarefa com esse nome. Informe outro nome de Tarefa:")
+	newLine.append(encodeWin(entry, "add"))
 	entry = raw_input("Summary:")	
-	newLine.append(entry)
+	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 	print "Remedy:"
 	newLine.append(users())
 	entry = raw_input("Helpdesk Voiza:")
-	newLine.append(entry)
+	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 
 	data.append(newLine)
 	writeCsvFile("tasks.csv", data)
@@ -77,9 +90,11 @@ def addFree(data, date):
 	newLine.append(date.strftime("%d-%m-%Y %H:%M"))
 	
 	entry = raw_input("Nome da Tarefa:")
-	newLine.append(entry)
+	while verifyTasks(entry, data) == True:
+		entry = raw_input("Ja existe tarefa com esse nome. Informe outro nome de Tarefa:")
+	newLine.append(encodeWin(entry, "add"))
 	entry = raw_input("Informe o campo da mensagem:")	
-	newLine.append(entry)
+	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 	
 	data.append(newLine)
 	writeCsvFile("tasks.csv", data)
@@ -93,11 +108,11 @@ def list(data, hour):
 			index = 5
 			print "-----------" + str(c+1) + "-----------\n"
 			print "Data:" + row[0] + "\n"
-			print "Nome da Tarefa:" + row[1] + "\n"
+			print "Nome da Tarefa:" + encodeWin(row[1], "list") + "\n"
 			if "Email" in row[1]:
-				print "--Email--\n"+ row[2] + "\n"
+				print "--Email--\n"+ encodeWin(row[2], "list") + "\n"
 			else:	
-				print "--Summary--\n"+ row[2] + "\n"
+				print "--Summary--\n"+ encodeWin(row[2], "list") + "\n"
 				print "--Remedy--"
 			temp = row[3].split(",")
 			for element in temp:
@@ -105,30 +120,30 @@ def list(data, hour):
 				element = element.replace("\'", "")
 				element = element.replace("]", "")
 				element = element.replace(" ", "", 1)
-				print element
+				print encodeWin(element, "list")
 						
 			print "\n--Helpdesk Voiza--" 
 			if (hour < 13):
 				print "Bom dia time,\n"
 			else:
 				print "Boa tarde time, \n"
-			print row[4] + "\n\nAtenciosamente."
+			print encodeWin(row[4], "list") + "\n\nAtenciosamente."
 			while len(row) > index:
 				print "\n--Resposta--"
-				print row[index]
+				print encodeWin(row[index], "list")
 				index += 1
 				print "\n--Helpdesk Voiza--"
 				if (hour < 13):
 					print "Bom dia time,\n"
 				else:
 					print "Boa tarde time, \n"
-				print row[index] + "\n\nAtenciosamente."
+				print encodeWin(row[index], "list") + "\n\nAtenciosamente."
 				index+=1
 		else:
 			print "-----------" + str(c+1) + "-----------\n"
 			print "Data:" + row[0] + "\n"
-			print "Nome da Tarefa:" + row[1] + "\n"
-			print "--Mensagem--\n" + row[2] + "\n"
+			print "Nome da Tarefa:" + encodeWin(row[1], "list") + "\n"
+			print "--Mensagem--\n" + encodeWin(row[2], "list") + "\n"
 		c += 1
 
 	if len(data) == 0:
@@ -136,20 +151,25 @@ def list(data, hour):
 
 # Remove uma tarefa do arquivo (por nome ou por índice)
 def remove(data):
+	count = 0
 	entry = raw_input("Informe o que deseja remover:")
 	if len(entry) < 2:
 		for i in xrange(len(data)):
 			if i == int(entry):
 				del data[i]
+				count += 1
 	else:
 		entry = entry.lower()
+		entry = encodeWin(entry, "add")
 		c = 0
 		for row in data:
 			if row[1].lower() == entry:
 				del data[c]
+				count += 1
 			c += 1	
-	
-	writeCsvFile("tasks.csv", data)
+	if count > 0:
+		writeCsvFile("tasks.csv", data)
+		print "\n" + str(count) +" tarefas foram removidas com sucesso."
 
 # Busca uma tarefa por nome ou todas as tarefas por data
 def find(data, hour):
@@ -165,6 +185,7 @@ def find(data, hour):
 		
 	else:
 		entry = entry.lower()
+		entry = encodeWin(entry, "add")
 		for row in data:
 			if row[1].lower() == entry:
 				temp.append(row)
@@ -179,14 +200,14 @@ def edit(data):
 	for row in data:
 		if row[1].lower() == entry:
 			entry = raw_input("Resposta:")
-			row.append(entry)
+			row.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 			entry = raw_input("Helpdesk Voiza:")
-			row.append(entry)
+			row.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 
 	writeCsvFile("tasks.csv", data)
 
 # Aloca uma quantidade de horas para uma tarefa
-def hour(time, data):
+def timeAdd(time, data):
 	temp = []
 	flag = False
 	entry = raw_input("Informe a data (dd-mm-yyyy):")
@@ -194,6 +215,7 @@ def hour(time, data):
 			entry = raw_input("Informe uma data valida (dd-mm-yyyy):")
 	temp.append(entry)
 	entry = raw_input("Informe o nome da tarefa:")
+	entry = encodeWin(entry, "add")
 	while flag == False:
 		for row in data:
 			if entry.lower() == row[1].lower() or entry == "exit":
@@ -222,7 +244,7 @@ def validateData(date):
 def listHours(data):
 	for row in data:
 		print "\nData:" + row[0]
-		print "Tarefa:" + row[1]
+		print "Tarefa:" + encodeWin(row[1], "list")
 		print "Horas:" + row[2]
 
 # Busca todas as horas alocadas em determinado dia ou busca todas as tarefas sem horas alocadas
@@ -237,10 +259,16 @@ def findTime(time, date, data):
 				aux.append(row[1])
 				aux.append("0")
 				temp.append(aux)
+		
+		for row in time:
+			if row[2] == "0":
+				temp.append(row)
 
 		listHours(temp)
 		if len(temp) > 0:
 			print "\nTarefas que nao possuem horas alocadas."
+	elif entry == "date":
+		print "date"
 	else:
 		if entry == "":
 			entry = date.strftime("%d-%m-%Y")
@@ -254,6 +282,10 @@ def findTime(time, date, data):
 					aux.append(row[1])
 					aux.append("0")
 					temp.append(aux)
+			
+			for row in time:
+				if row[2] == "0":
+					temp.append(row)
 
 			listHours(temp)
 			if len(temp) > 0:
@@ -263,12 +295,15 @@ def findTime(time, date, data):
 				entry = date.strftime("%d-%m-%Y")
 			s = 0.0
 			for row in time:
-				if entry == row[0]:
+				if entry == row[0] and row[2] != "0":
 					temp.append(row)
 					s += float(row[2])
 
 			listHours(temp)
-			print "\nTotal de horas encontradas:"+ str(s)
+			if s > 0.0:
+				print "\nForam encontradas " + str(s) + " horas alocadas."
+			else:
+				print "\nNao foram encontradas horas alocadas."
 
 # Edita uma alocação de hora (data ou tempo)
 def editTime(time):
@@ -314,25 +349,40 @@ def removeTime(time):
 
 # Verifica se existe alocação de horas para determinada tarefa
 def contaisHours(element, time):
+	
 	for row in time:
-		if element.lower() == row[1].lower() and row[2] != "0":
+		if element.lower() == row[1].lower():
 			return True
 
 	return False
+
+def verifyTasks(name, data):
+	for row in data:
+		if name == row[1]:
+			return True
+	
+	return False
+
+def encodeWin(string, op):
+	if op == "add":
+		return string.decode("cp850").encode("utf8")
+	elif op == "list":	
+		return string.decode("utf8").encode("cp850")
+
 
 # Imprime as ações disponíveis no programa
 def help():
 	print "Voce pode realizar as seguintes acoes:"
 	print "\nTarefas:"
-	print "\t- add: para adicionar uma tarefa;"
+	print "\t- add: para adicionar uma tarefa (usuarios do remedy nao podem possuir acentuacao);"
 	print "\t- add free: para adicionar uma tarefa livre de mascaras"
 	print "\t- find: para procurar uma tarefa por nome ou data;"
 	print "\t- remove: para remover uma tarefa por nome ou indice;"
-	print "\t- edit: para editar uma tarefa;"
+	print "\t- edit: para editar uma tarefa (reposta + helpdesk);"
 	print "\t- list: para listar todas as tarefas cadastradas."
 	print "Time:"
 	print "\t- time add: para alocar horas em uma tarefa;"
-	print "\t- time find: para procurar horas de determinada tarefa ou as tarefas sem horas;"
+	print "\t- time find: para procurar horas de determinada tarefa ou as tarefas sem horas (free);"
 	print "\t- time remove: para remover as horas de uma tarefa;"
 	print "\t- time edit: para editar a data ou as horas de uma tarefa;"
 	print "\t- time list: para listar todas as horas alocadas."
@@ -340,8 +390,18 @@ def help():
 	print "\n- show log: mostra todas as acoes realizadas;"
 	print "- exit: sai do programa."
 
+def developer():
+	print "Se utilizar o bash, digitar 3 como parametro (sys);"
+	print "Configuracao atual do cmd chcp 850 (encodeWin);"
+	print "Comando time find > free: quando e listado uma tarefa sem horario é pq ele sofreu um edit e tem alocação de horas extras;"
+	print "Decode + Encode para salvar em utf8 e printar no terminal em cp850."
+
+def toDo():
+	print "Dicionario para imprimir todas as horas alocadas por data;"
+	print "Script de resetar senha: comando \scriptResetSenha;"
+
 # Função main: trata as ações digitadas
-def main(entry):
+def main(entry, fuso):
 
 	data = readCsvFile("tasks.csv")
 	time = readCsvFile("timeTasks.csv")
@@ -349,7 +409,7 @@ def main(entry):
 	date = datetime.datetime.now()
 
 	if entry == "add":
-		data = add(data, date)
+		data = add(data, date, fuso)
 	elif entry == "list":
 		data = list(data, date.hour)
 	elif entry == "remove":
@@ -363,7 +423,7 @@ def main(entry):
 	elif entry == "edit":
 		edit(data)
 	elif entry == "time add":
-		hour(time, data)
+		timeAdd(time, data)
 	elif entry == "time list":
 		try:
 			listHours(time)
@@ -379,13 +439,30 @@ def main(entry):
 		removeTime(time)
 	elif entry == "help":
 		help()
+	elif entry == "--developer":
+		developer()
 
 	# Salva no log qual ação foi digitada (mesmo que não seja válida)
-	writeTxtFile("logTasks.txt", date.strftime("%d-%m-%Y %H:%M") + " - " + entry + "\n")
+	temp = date.strftime("%d-%m-%Y")
+	if date.hour > 9:
+		hour = str(date.hour-int(fuso))
+	else:
+		hour = "0" + str(date.hour-int(fuso))
+	if date.minute > 9:
+		minute = str(date.minute)
+	else:
+		minute = "0" + str(date.minute)
+	temp+= " " + hour + ":" + minute
+	writeTxtFile("logTasks.txt", temp + " - " + entry + "\n")
 
-# Início do programa		
+# Início do programa
+if (len(sys.argv) > 1):
+	fuso = sys.argv[1]
+else:
+	fuso = 0
+		
 entry = raw_input("Digite uma acao:")
 
 while (entry != "exit"):
-	main(entry)
+	main(entry, fuso)
 	entry = raw_input("\nDigite uma acao:")
