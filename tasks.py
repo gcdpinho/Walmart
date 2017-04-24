@@ -22,10 +22,16 @@ def writeCsvFile(fileName, data):
 		writer = csv.writer(csvFile, delimiter=',', quotechar='\"', quoting=csv.QUOTE_MINIMAL)
 		writer.writerows(data)
 
+# Lê os dados (por linha) de um arquivo e retorna uma lista com os dados
+def openTxtFile(fileName):
+	openFile = open(fileName, "r")
+	newData = openFile.readlines()
+
+	return newData
+
 # Adiciona ao arquivo de texto já existente, uma nova linha
 def writeTxtFile(fileName, data):
-	openFile = open("Files/"+fileName, "r")
-	newData = openFile.readlines()
+	newData = openTxtFile("Files/"+fileName)
 	newData.append(data)
 	
 	openFile = open("Files/"+fileName, "w")
@@ -34,8 +40,8 @@ def writeTxtFile(fileName, data):
 
 # Imprime as informações existente no arquivo txt de log
 def showLog(fileName):
-	openFile = open("Files/"+fileName, "r")
-	data = openFile.readlines()
+	openFile = openTxtFile("Files/"+fileName, "r")
+
 	for element in data:
 		print element
 	openFile.close()
@@ -79,31 +85,44 @@ def add(data, date, fuso):
 	print "Remedy:"
 	newLine.append(users())
 	entry = raw_input("Helpdesk Voiza:")
+	entry = entry.replace("\includeResetSenha", includeScript("resetSenha.txt"))
 	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 
 	data.append(newLine)
 	writeCsvFile("tasks.csv", data)
 
 # Adiciona tarefas com scopo livre
-def addFree(data, date):
+def addFree(data, date, fuso):
 	newLine = []
-	newLine.append(date.strftime("%d-%m-%Y %H:%M"))
+	temp = date.strftime("%d-%m-%Y")
+	if date.hour > 9:
+		hour = str(date.hour-int(fuso))
+	else:
+		hour = "0" + str(date.hour-int(fuso))
+	if date.minute > 9:
+		minute = str(date.minute)
+	else:
+		minute = "0" + str(date.minute)
+	temp+= " " + hour + ":" + minute
+	newLine.append(temp)
 	
 	entry = raw_input("Nome da Tarefa:")
 	while verifyTasks(entry, data) == True:
 		entry = raw_input("Ja existe tarefa com esse nome. Informe outro nome de Tarefa:")
 	newLine.append(encodeWin(entry, "add"))
 	entry = raw_input("Informe o campo da mensagem:")	
+	entry = entry.replace("\includeResetSenha", includeScript("resetSenha.txt"))
 	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 	
 	data.append(newLine)
 	writeCsvFile("tasks.csv", data)
 
 # Imprime todas as tarefas presentes no arquivo csv
-def list(data, hour):
+def list(data):
 	c = 0
 	
 	for row in data:
+		hour = row[0].split(":")[0].split(" ")[1]
 		if len(row) > 3:
 			index = 5
 			print "-----------" + str(c+1) + "-----------\n"
@@ -123,17 +142,20 @@ def list(data, hour):
 				print encodeWin(element, "list")
 						
 			print "\n--Helpdesk Voiza--" 
-			if (hour < 13):
+			if (int(hour) < 13):
 				print "Bom dia time,\n"
 			else:
 				print "Boa tarde time, \n"
 			print encodeWin(row[4], "list") + "\n\nAtenciosamente."
 			while len(row) > index:
+				if isDate(row[index]) == True:
+					print "\nData:"+ row[index] + "\n"
+					index += 1
 				print "\n--Resposta--"
 				print encodeWin(row[index], "list")
 				index += 1
 				print "\n--Helpdesk Voiza--"
-				if (hour < 13):
+				if (int(hour) < 13):
 					print "Bom dia time,\n"
 				else:
 					print "Boa tarde time, \n"
@@ -152,27 +174,22 @@ def list(data, hour):
 # Remove uma tarefa do arquivo (por nome ou por índice)
 def remove(data):
 	count = 0
-	entry = raw_input("Informe o que deseja remover:")
-	if len(entry) < 2:
-		for i in xrange(len(data)):
-			if i == int(entry):
-				del data[i]
-				count += 1
-	else:
-		entry = entry.lower()
-		entry = encodeWin(entry, "add")
-		c = 0
-		for row in data:
-			if row[1].lower() == entry:
-				del data[c]
-				count += 1
-			c += 1	
+	entry = raw_input("Informe o nome da tarefa que deseja remover:")
+	entry = entry.lower()
+	entry = encodeWin(entry, "add")
+	c = 0
+	for row in data:
+		if row[1].lower() == entry:
+			del data[c]
+			count += 1
+		c += 1	
+
 	if count > 0:
 		writeCsvFile("tasks.csv", data)
 		print "\n" + str(count) +" tarefas foram removidas com sucesso."
 
 # Busca uma tarefa por nome ou todas as tarefas por data
-def find(data, hour):
+def find(data):
 	temp = []
 	entry = raw_input("Informe o nome da tarefa:")
 	if entry == "date":
@@ -186,19 +203,36 @@ def find(data, hour):
 	else:
 		entry = entry.lower()
 		entry = encodeWin(entry, "add")
-		for row in data:
-			if row[1].lower() == entry:
-				temp.append(row)
+		if "%" in entry:
+			entry = entry.replace("%", "")
+			for row in data:
+				if entry in row[1].lower():
+					temp.append(row)
+		else:
+			for row in data:
+				if row[1].lower() == entry:
+					temp.append(row)
 	
-	list(temp, hour)
+	list(temp)
 	print "\nForam encontrados "+str(len(temp))+ " resultados."
 
 # Acrescenta a resposta do cliente + o Helpdesk Voiza a uma tarefa
-def edit(data):
+def edit(data, date, fuso):
 	entry = raw_input("Informe o nome da tarefa:")
 	entry = entry.lower()
 	for row in data:
 		if row[1].lower() == entry:
+			temp = date.strftime("%d-%m-%Y")
+			if date.hour > 9:
+				hour = str(date.hour-int(fuso))
+			else:
+				hour = "0" + str(date.hour-int(fuso))
+			if date.minute > 9:
+				minute = str(date.minute)
+			else:
+				minute = "0" + str(date.minute)
+			temp+= " " + hour + ":" + minute
+			row.append(temp)
 			entry = raw_input("Resposta:")
 			row.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 			entry = raw_input("Helpdesk Voiza:")
@@ -267,8 +301,20 @@ def findTime(time, date, data):
 		listHours(temp)
 		if len(temp) > 0:
 			print "\nTarefas que nao possuem horas alocadas."
+		else:
+			print "\nNao foram encontradas horas alocadas."
 	elif entry == "date":
-		print "date"
+		hourDate = {}
+		for row in time:
+			if row[0] not in hourDate.keys():
+				hourDate[row[0]] = float(row[2])
+			else:
+				hourDate[row[0]] += float(row[2])
+
+		hourDate = sorted(hourDate.items())
+		
+		for d,v in hourDate:
+			print d + ": " + str(v)
 	else:
 		if entry == "":
 			entry = date.strftime("%d-%m-%Y")
@@ -290,6 +336,8 @@ def findTime(time, date, data):
 			listHours(temp)
 			if len(temp) > 0:
 				print "\nTarefas que nao possuem horas alocadas."
+			else:
+				print "\nNao foram encontradas horas alocadas."
 		else:
 			if entry == "":
 				entry = date.strftime("%d-%m-%Y")
@@ -309,16 +357,42 @@ def findTime(time, date, data):
 def editTime(time):
 	entry = raw_input("Informe o nome da tarefa que deseja editar:")
 	entry = entry.lower()
-	for row in time:
-		if entry == row[1].lower():
-			entry = raw_input("Infome a nova data:")
-			if entry != "":
-				if validateData(entry) == True:
-					row[0] = entry
-			entry = raw_input("Informe a nova quantidade de horas:")
-			if entry != "":
-				row[2] = entry
+	matchs = []
 
+	for i in xrange(len(time)):
+		if entry == time[i][1].lower():
+			matchs.append(i)
+
+	if len(matchs) == 1:
+		entry = raw_input("Infome a nova data:")
+		if entry != "":
+			if validateData(entry) == True:
+				time[matchs[0]][0] = entry
+		entry = raw_input("Informe a nova quantidade de horas:")
+		if entry != "":
+			time[matchs[0]][2] = entry
+	elif len(matchs) > 1:
+		print "Tarefa: " + time[matchs[0]][1]
+		index = 0
+		for element in matchs:
+			print str(index) + ": Data: " + time[element][0]
+			if index <= 9:
+				print "   Horas: " + time[element][2]
+			else:
+				print "    Horas: " + time[element][2]
+			index += 1
+		entry = raw_input("Informe qual alocacao deseja editar (index):")
+		while int(entry) < 0 or int(entry) >= len(matchs):
+			entry = raw_input("Informe uma alocacao valida (index):")
+		temp = int(entry)
+		entry = raw_input("Infome a nova data:")
+		if entry != "":
+			if validateData(entry) == True:
+				time[matchs[temp]][0] = entry
+		entry = raw_input("Informe a nova quantidade de horas:")
+		if entry != "":
+			time[mactchs[temp]][2] = entry
+		
 	writeCsvFile("timeTasks.csv", time)
 
 # Remove uma alocação de hora (pesquisa por data)
@@ -356,6 +430,7 @@ def contaisHours(element, time):
 
 	return False
 
+# Verifica se existe uma tarefa com o mesmo nome
 def verifyTasks(name, data):
 	for row in data:
 		if name == row[1]:
@@ -363,12 +438,33 @@ def verifyTasks(name, data):
 	
 	return False
 
+# Codifica a string para poder armazenar no arquivo em utf-8 e mostrar no terminal em cp850
 def encodeWin(string, op):
 	if op == "add":
 		return string.decode("cp850").encode("utf8")
 	elif op == "list":	
 		return string.decode("utf8").encode("cp850")
 
+# Inclui no texto o conteúdo do arquivo
+def includeScript(fileName):
+	data = openTxtFile("Scripts/"+fileName)
+	string = ""
+	for row in data:
+		string += row
+	
+	return string.decode('utf-8-sig').encode('cp850')
+
+# Verifica se a string é uma data (DD-MM-YYYY HH:MM)
+def isDate(date):
+	temp = date.split("-")
+	if len(temp) == 3:
+		temp = temp[2].split(" ")
+		if len(temp) == 2:
+			temp = temp[1].split(":")
+			if len(temp) == 2:
+				return True
+	
+	return False
 
 # Imprime as ações disponíveis no programa
 def help():
@@ -391,14 +487,15 @@ def help():
 	print "- exit: sai do programa."
 
 def developer():
-	print "Se utilizar o bash, digitar 3 como parametro (sys);"
-	print "Configuracao atual do cmd chcp 850 (encodeWin);"
-	print "Comando time find > free: quando e listado uma tarefa sem horario é pq ele sofreu um edit e tem alocação de horas extras;"
-	print "Decode + Encode para salvar em utf8 e printar no terminal em cp850."
+	print "- Se utilizar o bash, digitar 3 como parametro (sys);"
+	print "- Configuracao atual do cmd chcp 850 (encodeWin);"
+	print "- Comando time find > free: quando e listado uma tarefa sem horario e pq ele sofreu um edit e tem alocação de horas extras;"
+	print "- Decode + Encode para salvar em utf8 e printar no terminal em cp850;"
+	print "- Codificacao para scripts em txt UTF8: utf-8-sig;"
+	print "- Mais de 99 alocacoes para a mesma tarefa (quase impossivel) verificar espacamento no edit time."
 
 def toDo():
-	print "Dicionario para imprimir todas as horas alocadas por data;"
-	print "Script de resetar senha: comando \scriptResetSenha;"
+	print "100%."
 
 # Função main: trata as ações digitadas
 def main(entry, fuso):
@@ -411,7 +508,7 @@ def main(entry, fuso):
 	if entry == "add":
 		data = add(data, date, fuso)
 	elif entry == "list":
-		data = list(data, date.hour)
+		data = list(data)
 	elif entry == "remove":
 		data = remove(data)
 	#elif entry == "clean":
@@ -419,9 +516,9 @@ def main(entry, fuso):
 	elif entry == "show log":
 		showLog("logTasks.txt")
 	elif entry == "find":
-		find(data, date.hour)
+		find(data)
 	elif entry == "edit":
-		edit(data)
+		edit(data, date, fuso)
 	elif entry == "time add":
 		timeAdd(time, data)
 	elif entry == "time list":
@@ -432,7 +529,7 @@ def main(entry, fuso):
 	elif entry == "time find":
 		findTime(time, date, data)
 	elif entry == "add free":
-		addFree(data, date)
+		addFree(data, date, fuso)
 	elif entry == "time edit":
 		editTime(time)
 	elif entry == "time remove":

@@ -58,3 +58,12 @@ Caso as informações digitadas estiverem corretas, sugerimos a seguinte sequên
 - Clicar em sistemas conectados;
 - Clicar no botão search e em seguida selecionar o sistema desejado (neste caso o voiza). Observe que neste momento aparecerá o login de acesso ao voiza;
 - Clique em alterar senha e gere uma senha acima de 7  dígitos (letras maiúsculas + minúsculas + números);"
+20-04-2017 16:58,INC000098952672,Erro no ISD ao solicitar acesso ao Voiza.,[['CPF:034.393.474-43']],avaliamos a situação e está aparentemente tudo ok com o usuártio. O problema ainda persiste?
+20-04-2017 17:12,INC000098955318,User informa que precisa forçar a interface entre o IDM e o Voiza.,[['CPF:916.977.600-82']],"não existe registro de usuário no sistema CRM Voiza. O problema é, possivelmente, na sincronização entre o IDM e o CRM Voiza. Encaminhe o associado ao IDM para que este possa avaliar a situação."
+20-04-2017 17:19,INC000098952122,Usuário informa que a planilha não está aparecendo para fazer os lançamentos de nomes.,"[['Login:ewramos', 'CPF:55.210.214-03']]","a tabulação: Capital Humano > Desligamento > Rescisão Complementar > PPR/Bônus para ex-associado não possui modelo de arquivo cadastrado. Mesmo que a observação contenha essa informação, no sistema CRM Voiza não existe cadastro de modelo de arquivo para essa tabulação e, portanto, não haverá a opção para realizar o download."
+24-04-2017 10:06,Desenvolvimento do flag expira senha,"Tarefa responsável pelo desenvolvimento do flag expira senha, permitindo que determinados usuários não necessitem efetuar a troca de senha periodicamente."
+24-04-2017 11:04,Requisição Email Alisson - Loja não encontrada,"Bom dia time,
+Poderia verificar o chamado INC000098863657 ele está apresentando o erro abaixo:
+ORA-20002: Loja não encontrada para a Empresa: 452 e Filial: 414.",[],"verificamos o chamado informado e não existe loja cadastrada com código empresa:452 e código filial: 414. Entretanto, para a loja BIG Maringa - Tuiuti e empresa 452, a filial encontrada é 124. Segue imagem em anexo para maior esclarecimento."
+24-04-2017 12:02,Requisição Email Alisson - loader ao anexar documento,"Bom dia time,
+No chamado INC000099015829, o usuário informa que está tentando anexar um arquivo no Voiza, e ele fica com a tela travada (ver imagem).",[],avaliamos a situação e tudo está aparentemente normal. Acreditamos que seja um problema de performance do servidor ou de conexão do usuário.
