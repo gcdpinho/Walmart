@@ -57,9 +57,9 @@ def users():
 			entry = raw_input("Classe:")
 			temp = raw_input(encodeWin("Informação:", "list"))
 
-			if entry == "CPF":
-				entry = entry.replace(".", "")
-				entry = entry.replace("-", "")
+			if entry.lower() == "cpf":
+				temp = temp.replace(".", "")
+				temp = temp.replace("-", "")
 			entry = entry + ":" + temp
 			user.append(entry)
 			cad = raw_input("Cadastrar outro atributo?(s/n)")
@@ -92,8 +92,8 @@ def add(data, date):
 		tempAux += "["
 		for element in row:
 			tempAux += element + ","
-		tempAux = tempAux[:-1] + "]"
-	tempAux += "]"
+		tempAux = tempAux[:-1] + "]+"
+	tempAux = tempAux[:-1] + "]"
 
 	newLine.append(encodeWin(tempAux, "add"))
 	entry = raw_input("Helpdesk Voiza:")
@@ -116,7 +116,7 @@ def addFree(data, date):
 		entry = raw_input("Ja existe tarefa com esse nome. Informe outro nome de Tarefa:")
 	newLine.append(encodeWin(entry, "add"))
 	entry = raw_input("Informe o campo da mensagem:")
-	if entry[-1::] != ".":
+	if entry[-1::] != "." and entry[-1::] != "!" and entry[-1::] != "?" and entry != "":
 		entry += "."	
 	entry = entry.replace("\includeResetSenha", includeScript("resetSenha.txt"))
 	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
@@ -140,17 +140,19 @@ def list(data):
 			else:	
 				print "--Summary--\n"+ encodeWin(row[2], "list") + "\n"
 				print "--Remedy--"
-			temp = row[3].split(",")
-			for element in temp:
-				element = element.replace("[", "")
-				element = element.replace("\'", "")
-				element = element.replace("]", "")
-				element = element.replace(" ", "", 1)
-				if "CPF" in element:
-					temp = element.split(":")
-					print encodeWin(temp[0]+ ":" + maskCPF(temp[1]), "list")
-				else:
-					print encodeWin(element, "list")
+			temp0 = row[3].split("+")
+			for e in temp0:
+				temp = e.split(",")
+				for element in temp:
+					element = element.replace("[", "")
+					element = element.replace("\'", "")
+					element = element.replace("]", "")
+					element = element.replace(" ", "", 1)
+					if "CPF" in element or "cpf" in element:
+						temp = element.split(":")
+						print encodeWin(temp[0]+ ":" + maskCPF(temp[1]), "list")
+					else:
+						print encodeWin(element, "list")
 						
 			print "\n--Helpdesk Voiza--" 
 			if (int(hour) < 13):
@@ -183,7 +185,7 @@ def list(data):
 		print "Nenhuma tarefa encontrada."
 
 # Remove uma tarefa do arquivo (por nome ou por índice)
-def remove(data):
+def remove(data, time):
 	count = 0
 	entry = raw_input("Informe o nome da tarefa que deseja remover:")
 	entry = entry.lower()
@@ -198,6 +200,8 @@ def remove(data):
 	if count > 0:
 		writeCsvFile("tasks.csv", data)
 		print "\n" + str(count) +" tarefas foram removidas com sucesso."
+
+		removeTime(time, entry)
 
 # Busca uma tarefa por nome ou todas as tarefas por data
 def find(data):
@@ -221,7 +225,7 @@ def find(data):
 	print "\nForam encontrados "+str(len(temp))+ " resultados."
 
 # Acrescenta a resposta do cliente + o Helpdesk Voiza a uma tarefa
-def edit(data, date):
+def edit(data, date, time):
 	entry = raw_input("Informe o nome da tarefa:")
 	entry = entry.lower()
 	entry = encodeWin(entry, "add")
@@ -229,20 +233,23 @@ def edit(data, date):
 	for row in data:
 		if row[1].lower() == entry:
 			flag = True
+			task = entry
 			row.append(date.strftime("%d-%m-%Y %H:%M"))
 			entry = raw_input("Resposta:")
-			if entry[-1::] != ".":
+			if entry[-1::] != "." and entry[-1::] != "!" and entry[-1::] != "?" and entry != "":
 				entry += "."
 			row.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 			entry = raw_input("Helpdesk Voiza:")
-			if entry[-1::] != ".":
+			if entry[-1::] != "." and entry[-1::] != "!" and entry[-1::] != "?" and entry != "":
 				entry += "."
 			entry = entry.replace("\includeResetSenha", includeScript("resetSenha.txt"))
 			entry = entry.replace("\includeSolicitarAcesso", includeScript("solicitarAcesso.txt"))
 			row.append(encodeWin(entry.replace("\enter", "\n"), "add"))
+			break;
 	
 	if flag == True:
 		writeCsvFile("tasks.csv", data)
+		addTimeEdit(date, task.upper(), time)
 	else:
 		print "\nNenhuma tarefa encontrada."
 
@@ -271,7 +278,7 @@ def editAnswer(data):
 				if element.lower() == entry.lower():
 					flag = True
 					entry = raw_input("Digite o campo mensagem:")
-					if entry[-1::] != ".":
+					if entry[-1::] != "." and entry[-1::] != "!" and entry[-1::] != "?" and entry != "":
 						entry += "."
 					entry = entry.replace("\includeResetSenha", includeScript("resetSenha.txt"))
 					entry = entry.replace("\includeSolicitarAcesso", includeScript("solicitarAcesso.txt"))
@@ -283,9 +290,11 @@ def editAnswer(data):
 				if row[4] == "":
 					flag = True
 					entry = raw_input("Digite o campo mensagem:")
-					if entry[-1::] != ".":
+					if entry[-1::] != "." and entry[-1::] != "!" and entry[-1::] != "?" and entry != "":
 						entry += "."
-					row[4] = encodeWin(entry, "add")
+					entry = entry.replace("\includeResetSenha", includeScript("resetSenha.txt"))
+					entry = entry.replace("\includeSolicitarAcesso", includeScript("solicitarAcesso.txt"))
+					row[4] = encodeWin(entry.replace("\enter", "\n"), "add")
 	if flag == True:
 		writeCsvFile("tasks.csv", data)
 	else:
@@ -450,8 +459,11 @@ def editTime(time):
 	writeCsvFile("timeTasks.csv", time)
 
 # Remove uma alocação de hora (pesquisa por data)
-def removeTime(time):
-	entry = raw_input("Informe o nome da tarefa que deseja remover:")
+def removeTime(time, task):
+	if task == None:		
+		entry = raw_input("Informe o nome da tarefa que deseja remover:")
+	else:
+		entry = task
 	entry = entry.lower()
 	entry = encodeWin(entry, "add")
 	temp = []
@@ -462,28 +474,38 @@ def removeTime(time):
 			temp.append(row)
 			tempC.append(c)
 		c += 1
-
 	if len(temp) > 0:
-		if len(temp) == 1:
-			del time[tempC[0]]
-			print encodeWin("\nAlocação deletada com sucesso.", "list")
+		if task == None:
+			if len(temp) == 1:
+				del time[tempC[0]]
+				print encodeWin("\nAlocação deletada com sucesso.", "list")
+			else:
+				print "Tarefa: " + encodeWin(temp[0][1], "list")
+				index = 0
+				for element in temp:
+					print str(index) + ": Data: " + element[0]
+					if index <= 9:
+						print "   Horas: " + element[2]
+					else:
+						print "    Horas: " + element[2]
+					index += 1
+				entry = raw_input("\nInforme qual das horas alocadas deseja remover:")
+				while int(entry) < 0 or int(entry) >= len(temp):
+					entry = raw_input(encodeWin("Informe um índice válido:", "list"))
+				del time[tempC[int(entry)]]
+				print encodeWin("\nAlocação deletada com sucesso.", "list")
+			writeCsvFile("timeTasks.csv", time)
 		else:
-			print "Tarefa: " + encodeWin(temp[0][1], "list")
-			index = 0
-			for element in temp:
-				print str(index) + ": Data: " + element[0]
-				if index <= 9:
-					print "   Horas: " + element[2]
-				else:
-					print "    Horas: " + element[2]
-				index += 1
-			entry = raw_input("\nInforme qual das horas alocadas deseja remover:")
-			while int(entry) < 0 or int(entry) >= len(temp):
-				entry = raw_input(encodeWin("Informe um índice válido:", "list"))
-			del time[tempC[int(entry)]]
-		writeCsvFile("timeTasks.csv", time)
+			for element in tempC:
+				del time[element]
+			writeCsvFile("timeTasks.csv", time)
+			if len(tempC) > 1:
+				print encodeWin("\n"+str(len(tempC))+" alocações excluídas.", "list")
+			else:
+				print encodeWin("\n"+str(len(tempC))+" alocação excluída.", "list")
 	else:
-		print "Nenhuma tarefa encontrada."
+		print encodeWin("Nenhuma alocação encontrada.", "list")
+
 
 # Verifica se existe alocação de horas para determinada tarefa
 def contaisHours(element, time):
@@ -552,7 +574,17 @@ def maskCPF(cpf):
 	cpf = cpf.replace(".", "")
 	cpf = cpf.replace("-", "")
 	return cpf[0:3] + "." + cpf[3:6] + "." + cpf[6:9] + "-" + cpf[9:]
-		
+
+
+def addTimeEdit(date, task, time):
+	aux = []
+	aux.append(date.strftime("%d-%m-%Y"))
+	aux.append(task)
+	aux.append(0)
+	time.append(aux)
+
+	writeCsvFile("timeTasks.csv", time)
+
 
 # Imprime as ações disponíveis no programa
 def help():
@@ -604,7 +636,7 @@ def main(entry):
 	elif entry == "list":
 		data = list(data)
 	elif entry == "remove":
-		data = remove(data)
+		data = remove(data, time)
 	#elif entry == "clean":
 	#	writeCsvFile("tasks.csv", "")
 	elif entry == "show log":
@@ -612,7 +644,7 @@ def main(entry):
 	elif entry == "find":
 		find(data)
 	elif entry == "edit":
-		edit(data, date)
+		edit(data, date, time)
 	elif entry == "time add":
 		timeAdd(time, data)
 	elif entry == "time list":
@@ -627,7 +659,7 @@ def main(entry):
 	elif entry == "time edit":
 		editTime(time)
 	elif entry == "time remove":
-		removeTime(time)
+		removeTime(time, None)
 	elif entry == "help":
 		help()
 	elif entry == "--developer":
