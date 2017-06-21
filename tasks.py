@@ -87,13 +87,16 @@ def add(data, date):
 	newLine.append(encodeWin(entry.replace("\enter", "\n"), "add"))
 	print "Remedy:"
 	temp = users()
-	tempAux = "["
+	tempAux = ""
+	if len(temp) > 0:
+		tempAux = "["
 	for row in temp:
 		tempAux += "["
 		for element in row:
 			tempAux += element + ","
 		tempAux = tempAux[:-1] + "]+"
-	tempAux = tempAux[:-1] + "]"
+	if len(temp) > 0:
+		tempAux = tempAux[:-1] + "]"
 
 	newLine.append(encodeWin(tempAux, "add"))
 	entry = raw_input("Helpdesk Voiza:")
@@ -147,7 +150,6 @@ def list(data):
 					element = element.replace("[", "")
 					element = element.replace("\'", "")
 					element = element.replace("]", "")
-					element = element.replace(" ", "", 1)
 					if "CPF" in element or "cpf" in element:
 						temp = element.split(":")
 						print encodeWin(temp[0]+ ":" + maskCPF(temp[1]), "list")
@@ -618,10 +620,13 @@ def developer():
 	print encodeWin("- Codificação para scripts em txt UTF8: utf-8-sig;", "list")
 	print encodeWin("- Funiconalidades dos sistema que precisam pesquisar nome de tarefa estão utilizando o parâmetro IN (contém);", "list")
 	print encodeWin("- Mais de 99 alocacoes para a mesma tarefa (quase impossível) verificar espaçamento no edit time;", "list")
+	print encodeWin("- Comando remove: limpa todas as alocações com da tarefa (timeTask)", "list")
+	print encodeWin("- Comando edit: adiciona uma alocação de hora para o dia atual de valor 0 ", "list")
 
 # O que precisa ser feito no sistema
 def toDo():
-	print "100%."
+	print "Script para fazer backup dos arquivos diariamente."
+	#print "100%."
 
 # Função main: trata as ações digitadas
 def main(entry):
