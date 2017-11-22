@@ -78,12 +78,12 @@
 11-05-2017,INC000099655890,1
 11-05-2017,INC000099662411,2
 11-05-2017,INC000099665592,1
-11-05-2017,Mitsubish Direct Assist Android,4.5
-12-05-2017,Mitsubish Direct Assist Android,2
+11-05-2017,Mitsubishi Direct Assist Android,4.5
+12-05-2017,Mitsubishi Direct Assist Android,2
 12-05-2017,INC000099690615,1
 12-05-2017,INC000099693256,1
 12-05-2017,Nissan Direct Assist Android,2.5
-12-05-2017,Mitsubish Direct Assist iOS,2
+12-05-2017,Mitsubishi Direct Assist iOS,2
 15-05-2017,BMW Direct Assist iOS,2
 15-05-2017,Apoio 4all serviço CAD,2.5
 15-05-2017,INC000099909711,1
@@ -101,11 +101,11 @@
 24-05-2017,Bug de redirecionamento ao encaminhar um chamado devolvido ao solicitante,8.5
 25-05-2017,Direct Assist Youse,8.5
 26-05-2017,Requisição Email Fabiana - Anexo Chamados CRC (INC0001000128588),8.5
-29-05-2017,Mitsubish Direct Assist iOS,1
+29-05-2017,Mitsubishi Direct Assist iOS,1
 29-05-2017,INC000099739666,0.5
 29-05-2017,Nissan Direct Assist Android,1
 29-05-2017,INC000100079027,0.5
-29-05-2017,Mitsubish Direct Assist Android,1
+29-05-2017,Mitsubishi Direct Assist Android,1
 29-05-2017,INC000099848880,1
 29-05-2017,BMW Direct Assist Android,1
 29-05-2017,INC000100089147,0.5
@@ -122,7 +122,7 @@
 31-05-2017,Requisição Email Silvana - Tamanho de arquivo template,0.5
 31-05-2017,Requisição Email Elisabete - Bloqueio Usuário Compliance + Lista de todos os usuários,2
 31-05-2017,Nissan Direct Assist Android,2
-31-05-2017,Mitsubish Direct Assist Android,2
+31-05-2017,Mitsubishi Direct Assist Android,2
 01-06-2017,INC000100314457,1
 01-06-2017,INC000100148710,1
 01-06-2017,Sompo Direct Assist Android,5.5
@@ -167,4 +167,308 @@
 20-06-2017,INC000100558857,1.5
 20-06-2017,INC000100883569,1
 20-06-2017,INC000100907956,2
-21-06-2017,INC000100314457,0
+21-06-2017,INC000100314457,1
+21-06-2017,Nissan Direct Assist iOS,3.5
+21-06-2017,Mitsubishi Direct Assist iOS,4
+22-06-2017,Direct Assist Liberty Android,8.5
+23-06-2017,Melhoria CRM - Alteração de fluxo de sinistros,8.5
+26-06-2017,Direct Assist Liberty Android,8.5
+30-06-2017,INC000101056981,2.5
+27-06-2017,INC000100989037,1.5
+27-06-2017,INC000100992543,1
+27-06-2017,INC000101016779,1
+27-06-2017,INC000101107567,1.5
+27-06-2017,Nissan Direct Assist Android,1.5
+27-06-2017,Mitsubishi Direct Assist Android,2
+28-06-2017,Sompo Direct Assist Android,1.5
+28-06-2017,Indiana Direct Assist Android,1.5
+28-06-2017,Nissan Direct Assist Android,1.5
+28-06-2017,Mitsubishi Direct Assist Android,1.5
+28-06-2017,INC000101094682,1
+28-06-2017,INC000101018470,1.5
+29-06-2017,Melhoria CRM - Alteração de fluxo de sinistros,4
+29-06-2017,INC000100883569,2
+29-06-2017,Sompo Direct Assist Android,2.5
+30-06-2017,INC000101136097,1.5
+30-06-2017,INC000101216968,1.5
+30-06-2017,INC000101239830,1
+30-06-2017,Sompo Direct Assist Android,2
+03-07-2017,INC000101257525,1
+03-07-2017,INC000101273303,1.5
+03-07-2017,INC000101279048,2
+03-07-2017,INC000101221009,2
+03-07-2017,INC000101218877,2
+04-07-2017,Sompo Direct Assist Android,7
+04-07-2017,Zurich Direct Assist Android,1.5
+05-07-2017,INC000101250727,1
+05-07-2017,INC000101352388,1
+05-07-2017,INC000101372753,1
+05-07-2017,INC000101373912,1.5
+05-07-2017,INC000101375008,1
+05-07-2017,INC000101377312,1
+05-07-2017,INC000101377400,1
+05-07-2017,INC000101315087,1
+06-07-2017,Direct Assist Sul-América Android,8.5
+07-07-2017,Direct Assist Sul-América Android,8.5
+14-07-2017,INC000101375008,2
+10-07-2017,Direct Assist Sul-América Android,8.5
+11-07-2017,Direct Assist Sul-América Android,8.5
+14-07-2017,INC000101429266,3.5
+12-07-2017,Direct Assist Sul-América Android,8.5
+13-07-2017,INC000101423665,1
+13-07-2017,INC000101414678,1
+13-07-2017,INC000101521344,1
+13-07-2017,INC000101535383,1
+13-07-2017,INC000101569298,1
+13-07-2017,Direct Assist Sul-América Android,3.5
+14-07-2017,INC000101569248,1
+14-07-2017,INC000101617431,1
+14-07-2017,INC000101692728,1
+17-07-2017,INC000101735931,1
+17-07-2017,Direct Assist Sul-América Android,7.5
+18-07-2017,Direct Assist Sul-América Android,8.5
+19-07-2017,INC000101855052,2
+19-07-2017,Direct Assist Sul-América Android,4.5
+19-07-2017,Sompo Direct Assist Android,2
+20-07-2017,INC000101867407,1
+20-07-2017,Direct Assist Liberty Android,4.5
+20-07-2017,Direct Assist Sul-América Android,3
+21-07-2017,INC000101924328,1.5
+21-07-2017,INC000101897348,1
+21-07-2017,Direct Assist Liberty Android,2
+21-07-2017,Direct Assist Sul-América Android,4
+24-07-2017,INC000101938481,1
+24-07-2017,Requisição Email Juliherms - Erro na criação de chamados GSS,2
+24-07-2017,Direct Assist Sul-América Android,5.5
+25-07-2017,INC000102017065,1
+25-07-2017,Direct Assist Sul-América Android,7.5
+27-07-2017,INC000102017065,1.5
+02-08-2017,INC000102079255,2
+26-07-2017,INC000102075601,1
+26-07-2017,INC000102074138,1
+26-07-2017,INC000102007322,2
+26-07-2017,INC000102044662,1
+26-07-2017,Direct Assist Sul-América Android,3.5
+27-07-2017,Requisição Marcia (INC000102119519) - Problema no grupo observador,3
+27-07-2017,Direct Assist Sul-América Android,2
+28-07-2017,Direct Assist Sul-América Android,8.5
+27-07-2017,INC000102052252,2
+31-07-2017,Direct Assist Sul-América Android,4
+31-07-2017,Direct Assist Sul-América iOS,4.5
+01-08-2017,Direct Assist Sul-América iOS,8.5
+02-08-2017,INC000102145029,1
+02-08-2017,Requisição Email Elisandra - Erro ao abrir anexo,4.5
+02-08-2017,INC000102234008,1
+03-08-2017,INC000102256778,1
+03-08-2017,INC000102302029,1
+03-08-2017,INC000102322061,1
+03-08-2017,Direct Assist Sul-América iOS,5.5
+04-08-2017,Requisição Email Idirley - Lista de usuários ativos no CRM Voiza,2
+04-08-2017,INC000101852645,1
+04-08-2017,REQUISIçãO EMAIL JULIHERMS - NãO CONSEGUE ABRIR CHAMADOS,3
+04-08-2017,Direct Assist Sul-América iOS,2.5
+07-08-2017,Direct Assist Sul-América iOS,8.5
+15-08-2017,INC000101852645,1
+15-08-2017,INC000102079255,1
+08-08-2017,Direct Assist Sul-América iOS,6.5
+08-08-2017,Requisição Email Silvana - Lista de tabulações e arquivos de modelo,2
+09-08-2017,Direct Assist Sul-América iOS,8.5
+15-08-2017,INC000102513039,1.5
+10-08-2017,Direct Assist Sul-América iOS,8.5
+16-08-2017,INC000102371201,1
+16-08-2017,INC000102574147,1
+17-08-2017,INC000102516118,1
+11-08-2017,INC000102324572,1
+11-08-2017,INC000102433695,1
+11-08-2017,INC000102472788,1
+11-08-2017,INC000102473263,1
+11-08-2017,Direct Assist Sul-América iOS,4.5
+14-08-2017,INC000102521240,1
+14-08-2017,INC000102529784,1
+14-08-2017,INC000102563961,1
+14-08-2017,INC000102569552,0.5
+14-08-2017,INC000102593201,1
+14-08-2017,Direct Assist Sul-América iOS,4.0
+15-08-2017,INC000102594139,1
+15-08-2017,Direct Assist Sul-América iOS,4
+08-09-2017,INC000102574147,1
+16-08-2017,INC000102596505,1
+16-08-2017,INC000102672666,1
+16-08-2017,INC000102675000,0.5
+16-08-2017,Direct Assist Sul-América iOS,4
+17-08-2017,Requisição Email Ariane - Grupo Funcional Duplicado (principal),1
+17-08-2017,INC000102689961,1
+17-08-2017,INC000102704814,1
+17-08-2017,Direct Assist Sul-América iOS,4.5
+18-08-2017,INC000102711605,1
+18-08-2017,Requisição Email Fabiana - Erro ao Encerrar um protocolo (INC000102709055),1
+18-08-2017,INC000102728520,1
+18-08-2017,INC000102740462,1
+18-08-2017,Direct Assist Sul-América iOS,4.5
+21-08-2017,Direct Assist Sul-América iOS,8.5
+22-08-2017,Direct Assist Sul-América iOS,8.5
+23-08-2017,Direct Assist Sul-América iOS,8.5
+24-08-2017,Direct Assist Sul-América iOS,8.5
+25-08-2017,Direct Assist Sul-América iOS,8.5
+08-09-2017,INC000102675000,1
+28-08-2017,INC000102741941,0.5
+28-08-2017,INC000102753778,1
+28-08-2017,INC000102754319,0.5
+28-08-2017,INC000102756347,1
+28-08-2017,INC000102779002,0.5
+28-08-2017,INC000102780006,0.5
+28-08-2017,INC000102807792,0.5
+28-08-2017,INC000102784610,1
+28-08-2017,INC000102793012,0.5
+28-08-2017,Requisição Email Ariane (INC000102792745) - Problema nos emails de encaminhamento,1.5
+28-08-2017,Requisição Email Alisson - Erro no portal de identidades 5 usuários,1
+29-08-2017,INC000102798806,1
+29-08-2017,INC000102841707,0.5
+29-08-2017,INC000102876234,1
+29-08-2017,INC000102874079,0.5
+29-08-2017,INC000102880832,1
+29-08-2017,Direct Assist Liberty iOS,4.5
+30-08-2017,Direct Assist Liberty iOS,8.5
+31-08-2017,Direct Assist Liberty iOS,4
+31-08-2017,Direct Assist Sul-América iOS,4.5
+01-09-2017,Direct Assist Sul-América iOS,5.5
+01-09-2017,Direct Assist Liberty iOS,3
+14-09-2017,INC000102885082,2.5
+04-09-2017,INC000102889106,1
+04-09-2017,INC000102893950,1
+04-09-2017,INC000102907899,1
+04-09-2017,INC000102917687,1
+04-09-2017,Direct Assist Sul-América iOS,4.5
+05-09-2017,INC000102981610,0.5
+05-09-2017,INC000102984351,0.5
+05-09-2017,INC000102996455,1
+05-09-2017,INC000103005440,0.5
+05-09-2017,INC000103038699,1
+05-09-2017,INC000103045934,0.5
+05-09-2017,Direct Assist Sul-América iOS,3
+05-09-2017,Direct Assist Liberty iOS,1.5
+06-09-2017,INC000102450748,0.5
+06-09-2017,INC000102794674,0.5
+06-09-2017,INC000103048886,1
+06-09-2017,INC000103048886,1
+06-09-2017,INC000103058723,0.5
+06-09-2017,INC000103119297,1
+06-09-2017,INC000103121125,1
+06-09-2017,INC000103130591,1
+06-09-2017,INC000102945939,1
+06-09-2017,INC000103141952,1
+14-09-2017,INC000103245695,2
+08-09-2017,Requisição Email Elisabete - Inclusão de usuários no ambiente de homologação,4.5
+08-09-2017,INC000103186524,1
+08-09-2017,INC000103203634,1
+11-09-2017,INC000103216944,1
+11-09-2017,INC000103234375,0.5
+11-09-2017,INC000103281536,1
+11-09-2017,INC000103286111,1
+11-09-2017,INC000103297286,1
+11-09-2017,INC000103299307,1
+11-09-2017,INC000103359565,1
+11-09-2017,INC000103361553,1
+11-09-2017,INC000103371356,1
+14-09-2017,INC000103438514,1
+12-09-2017,INC000103370777,1
+12-09-2017,INC000103407716,1
+12-09-2017,INC000103410994,1
+12-09-2017,INC000103450416,1.5
+12-09-2017,INC000103438585,2
+12-09-2017,INC000103526387,1
+12-09-2017,INC000103559331,1
+13-09-2017,INC000103618438,1
+13-09-2017,INC000103652753,1
+13-09-2017,INC000103677720,1
+13-09-2017,INC000103700590,1
+13-09-2017,INC000103706252,1.5
+13-09-2017,INC000103655785,3
+14-09-2017,INC000103763105,1
+14-09-2017,Requisição Email Elisabete - Criação e usuário sistêmico no ambiente de produção,2
+15-09-2017,INC000103361553,1
+15-09-2017,INC000103652753,3
+15-09-2017,Requisição Email Bete - Lojas ativas,3.5
+15-09-2017,INC000103762917,1
+18-09-2017,INC000103706252,1
+18-09-2017,INC000103823085,1
+18-09-2017,INC000103868441,1
+18-09-2017,Convocados,5.5
+19-09-2017,INC000103908770,1
+19-09-2017,INC000103907556,1
+19-09-2017,Convocados,5.5
+19-09-2017,INC000103921839,1
+21-09-2017,INC000103998419,2.5
+21-09-2017,INC000103950829,2
+21-09-2017,INC000104001068,2
+21-09-2017,INC000104009124,2
+22-09-2017,INC000104012782,2
+22-09-2017,INC000104013187,2
+22-09-2017,INC000104017208,2
+22-09-2017,INC000104040076,2.5
+25-09-2017,INC000104052867,4
+25-09-2017,INC000104078278,4.5
+27-09-2017,INC000103907556,3
+26-09-2017,INC000104108965,4
+26-09-2017,Checklist - GAVB,4.5
+27-09-2017,INC000104152345,3
+27-09-2017,Checklist - GAVB,2.5
+28-09-2017,INC000104190718,5
+29-09-2017,INC000104191213,8.5
+28-09-2017,Checklist - GAVB,3.5
+02-10-2017,INC000104267334,3
+02-10-2017,INC000104330253,3
+02-10-2017,INC000104328970,2.5
+03-10-2017,INC000104340059,2.5
+03-10-2017,INC000104342704,3
+03-10-2017,INC000103701690,3
+04-10-2017,INC000104267334,4
+04-10-2017,INC000104342704,4.5
+05-10-2017,Direct Assist Liberty iOS,4.5
+05-10-2017,Direct Assist Liberty Android,4
+06-10-2017,Direct Assist Liberty iOS,2
+06-10-2017,Direct Assist Liberty Android,2.5
+06-10-2017,Requisição Email Ariane - Encaminhamento automático de chamados,4
+09-10-2017,Direct Assist Liberty iOS,3
+09-10-2017,Checklist - GAVB,1.5
+09-10-2017,Compatibilidade CRM Voiza - Programa para cegos,4
+10-10-2017,Compatibilidade CRM Voiza - Programa para cegos,8.5
+11-10-2017,Direct Assist Sul-América Android,4.5
+11-10-2017,Compatibilidade CRM Voiza - Programa para cegos,4
+13-10-2017,Compatibilidade CRM Voiza - Programa para cegos,8.5
+16-10-2017,Requisição Email Luiz Narciso - Porta Voiza,8.5
+17-10-2017,Requisição Email Alisson - Erro no Anexo de Documentos,8.5
+18-10-2017,Requisição Email Alisson - Erro no acesso,4
+18-10-2017,Requisição Email Alisson - Problema no email,4.5
+19-10-2017,Requisição Email Maurien - Solicitação de acesso,4.5
+19-10-2017,Checklist - GAVB,4
+20-10-2017,Requisição Alisson - Usuário sem acesso a chamados,8.5
+23-10-2017,Checklist - GAVB,8.5
+25-10-2017,requisição email jose mendes - verificar usuário,4
+24-10-2017,Direct Assist Sul-América iOS,4
+24-10-2017,Direct Assist Liberty iOS,2.5
+24-10-2017,Requisição Email Silvana - anexo,2
+25-10-2017,Checklist - GAVB,4.5
+26-10-2017,Checklist - GAVB,4.5
+26-10-2017,Direct Assist Liberty iOS,4
+27-10-2017,Direct Assist Sul-América iOS,2.5
+27-10-2017,Direct Assist Liberty iOS,2.5
+27-10-2017,Requisição Email Jose Silva - Problema na consulta de chamados,2
+27-10-2017,Requisição Email Daniela - Reativação de usuário,1.5
+30-10-2017,Requisição Email Fabiana - Relatório com data divergente,8.5
+31-10-2017,Requisição Email Jose Silva - notificação por email,8.5
+03-11-2017,Direct Assist Sul-América iOS,4
+01-11-2017,Requisição Email Juliherms - Erro de senha ou regional,8.5
+03-11-2017,Treinamento Python - Webscraping e Crawler,4.5
+06-11-2017,Treinamento Python - Webscraping e Crawler,8.5
+07-11-2017,Requisição Email Alisson - Verificação de usuário,8.5
+08-11-2017,Requisição Email Alisson - Usuária não consegue atender chamados,8.5
+09-11-2017,Requisição Email Juliherms - problema no manifesto,8.5
+10-11-2017,Requisição Email Silvana - Erro no cadastro de solicitante,8.5
+13-11-2017,Treinamento Python - Webscraping e Crawler,8.5
+17-11-2017,Requisição Email Silvana - Erro Devolução Solitante,8.5
+14-11-2017,Treinamento Python - Webscraping e Crawler,8.5
+16-11-2017,Requisição Email Juliherms - Usuário não possui grupo funcional,4
+16-11-2017,Direct Assist Sul-América iOS,4.5
+20-11-2017,Treinamento Python - Webscraping e Crawler,8.5
+21-11-2017,Treinamento Python - Webscraping e Crawler,8.5
